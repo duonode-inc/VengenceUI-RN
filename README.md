@@ -41,14 +41,32 @@ https://github.com/user-attachments/assets/05b58add-f66e-4a4c-a04b-5dc3fba8c88b
 
 ## 📱 React Native
 
-VengeanceUI is also available for **React Native** with the same component API, powered by `react-native-reanimated` for smooth 60 fps animations.
+VengeanceUI is also available for **React Native** with the same component API, powered by `react-native-reanimated` for smooth 60 fps animations. **18 components** ported with full TypeScript support.
 
 👉 **[React Native Quick Start →](./react-native/README.md)**
 
 ```tsx
-import { Button, AnimatedButton, Card, Badge, FlipText } from 'vengenceui-rn';
+import {
+  Button, AnimatedButton,
+  Card, CardHeader, CardTitle, CardContent, CardFooter,
+  Input, Textarea, Badge, Avatar, Label,
+  Separator, Skeleton, Progress, Switch, Checkbox,
+  Alert, AlertTitle, AlertDescription,
+  Tabs, TabsList, TabsTrigger, TabsContent,
+  AnimatedNumber, AnimatedScore, FlipText, FlipFadeText,
+  colors, darkColors, spacing, radii, fontSizes, mergeStyles,
+} from 'vengenceui-rn';
 
-<AnimatedButton onPress={() => {}}>Get Started</AnimatedButton>
+<Card>
+  <CardHeader>
+    <CardTitle>Welcome</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <FlipText duration={2200} loop>Hello World</FlipText>
+    <Badge variant="secondary">New</Badge>
+    <AnimatedButton onPress={() => {}}>Get Started</AnimatedButton>
+  </CardContent>
+</Card>
 ```
 
 ---

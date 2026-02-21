@@ -32,6 +32,9 @@ export type {
 export { Input } from "./components/Input";
 export type { InputProps } from "./components/Input";
 
+export { Textarea } from "./components/Textarea";
+export type { TextareaProps } from "./components/Textarea";
+
 export { Badge } from "./components/Badge";
 export type { BadgeProps } from "./components/Badge";
 
@@ -46,6 +49,47 @@ export type {
 
 export { FlipText } from "./components/FlipText";
 export type { FlipTextProps } from "./components/FlipText";
+
+export { FlipFadeText } from "./components/FlipFadeText";
+export type { FlipFadeTextProps } from "./components/FlipFadeText";
+
+export { Separator } from "./components/Separator";
+export type { SeparatorProps } from "./components/Separator";
+
+export { Skeleton } from "./components/Skeleton";
+export type { SkeletonProps } from "./components/Skeleton";
+
+export { Progress } from "./components/Progress";
+export type { ProgressProps } from "./components/Progress";
+
+export { Switch } from "./components/Switch";
+export type { SwitchProps } from "./components/Switch";
+
+export { Checkbox } from "./components/Checkbox";
+export type { CheckboxProps } from "./components/Checkbox";
+
+export { Alert, AlertTitle, AlertDescription } from "./components/Alert";
+export type {
+  AlertProps,
+  AlertTitleProps,
+  AlertDescriptionProps,
+} from "./components/Alert";
+
+export { Label } from "./components/Label";
+export type { LabelProps } from "./components/Label";
+
+export {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+} from "./components/Tabs";
+export type {
+  TabsProps,
+  TabsListProps,
+  TabsTriggerProps,
+  TabsContentProps,
+} from "./components/Tabs";
 
 // Theme & utilities
 export { colors, darkColors, spacing, radii, fontSizes } from "./theme";

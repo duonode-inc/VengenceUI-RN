@@ -211,6 +211,153 @@ test.describe("FlipText", () => {
 });
 
 /* ------------------------------------------------------------------ */
+/*  Textarea                                                           */
+/* ------------------------------------------------------------------ */
+
+test.describe("Textarea", () => {
+  test("renders and accepts multiline text", async ({ page }) => {
+    const textarea = page.locator(tid("textarea-default"));
+    await expect(textarea).toBeVisible();
+    await textarea.fill("line one");
+    await expect(page.locator(tid("textarea-echo"))).toHaveText(
+      "Typed: line one",
+    );
+  });
+
+  test("invalid textarea has destructive border", async ({ page }) => {
+    const textarea = page.locator(tid("textarea-invalid"));
+    await expect(textarea).toBeVisible();
+    const borderColor = await textarea.evaluate(
+      (el) => getComputedStyle(el).borderColor,
+    );
+    expect(borderColor).toContain("239");
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Separator                                                          */
+/* ------------------------------------------------------------------ */
+
+test.describe("Separator", () => {
+  test("renders horizontal and vertical separators", async ({ page }) => {
+    await expect(page.locator(tid("separator-h"))).toBeVisible();
+    // Vertical separator is 1px wide and may not be "visible" in Playwright's
+    // definition, so we check it's attached to the DOM instead
+    await expect(page.locator(tid("separator-v"))).toBeAttached();
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Skeleton                                                           */
+/* ------------------------------------------------------------------ */
+
+test.describe("Skeleton", () => {
+  test("renders skeleton placeholders", async ({ page }) => {
+    await expect(page.locator(tid("skeleton-rect"))).toBeVisible();
+    await expect(page.locator(tid("skeleton-circle"))).toBeVisible();
+    await expect(page.locator(tid("skeleton-wide"))).toBeVisible();
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Progress                                                           */
+/* ------------------------------------------------------------------ */
+
+test.describe("Progress", () => {
+  test("renders progress bar", async ({ page }) => {
+    await expect(page.locator(tid("progress-bar"))).toBeVisible();
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Switch                                                             */
+/* ------------------------------------------------------------------ */
+
+test.describe("Switch", () => {
+  test("toggles on click", async ({ page }) => {
+    await expect(page.locator(tid("switch-state"))).toHaveText("OFF");
+    await page.locator(tid("switch-toggle")).click();
+    await expect(page.locator(tid("switch-state"))).toHaveText("ON");
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Checkbox                                                           */
+/* ------------------------------------------------------------------ */
+
+test.describe("Checkbox", () => {
+  test("toggles on click", async ({ page }) => {
+    await expect(page.locator(tid("checkbox-state"))).toHaveText("Unchecked");
+    await page.locator(tid("checkbox-toggle")).click();
+    await expect(page.locator(tid("checkbox-state"))).toHaveText("Checked");
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Alert                                                              */
+/* ------------------------------------------------------------------ */
+
+test.describe("Alert", () => {
+  test("renders default and destructive alerts", async ({ page }) => {
+    const defaultAlert = page.locator(tid("alert-default"));
+    await expect(defaultAlert).toBeVisible();
+    await expect(defaultAlert).toContainText("Heads up!");
+    await expect(defaultAlert).toContainText("informational alert");
+
+    const destructiveAlert = page.locator(tid("alert-destructive"));
+    await expect(destructiveAlert).toBeVisible();
+    await expect(destructiveAlert).toContainText("Error");
+    await expect(destructiveAlert).toContainText("Something went wrong");
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Label                                                              */
+/* ------------------------------------------------------------------ */
+
+test.describe("Label", () => {
+  test("renders labels", async ({ page }) => {
+    await expect(page.locator(tid("label-default"))).toContainText(
+      "Email address",
+    );
+    await expect(page.locator(tid("label-disabled"))).toContainText(
+      "Disabled label",
+    );
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  Tabs                                                               */
+/* ------------------------------------------------------------------ */
+
+test.describe("Tabs", () => {
+  test("renders tabs and switches content", async ({ page }) => {
+    await expect(page.locator(tid("tabs"))).toBeVisible();
+    await expect(page.locator(tid("tab-content-1"))).toContainText(
+      "Account content",
+    );
+
+    // Click on Settings tab
+    await page.getByRole("tab", { name: "Settings" }).click();
+    await expect(page.locator(tid("tab-content-2"))).toContainText(
+      "Settings content",
+    );
+  });
+});
+
+/* ------------------------------------------------------------------ */
+/*  FlipFadeText                                                       */
+/* ------------------------------------------------------------------ */
+
+test.describe("FlipFadeText", () => {
+  test("renders word cycling text", async ({ page }) => {
+    const flipFade = page.locator(tid("flip-fade-text"));
+    await expect(flipFade).toBeVisible();
+    await expect(flipFade).toContainText("HELLO");
+  });
+});
+
+/* ------------------------------------------------------------------ */
 /*  Theme tokens                                                       */
 /* ------------------------------------------------------------------ */
 
