@@ -10,6 +10,9 @@ on:
     paths:
       - "react-native/**"
 
+permissions:
+  contents: read
+
 jobs:
   e2e:
     name: Playwright E2E

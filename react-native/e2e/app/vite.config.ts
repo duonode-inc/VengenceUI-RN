@@ -14,7 +14,7 @@ export default defineConfig({
   },
   build: {
     outDir: path.resolve(__dirname, "../dist-e2e"),
-    emptyDirBeforeWrite: true,
+    emptyOutDir: true,
   },
   server: {
     port: 5173,
