@@ -57,7 +57,6 @@ export function Input({
           !editable && styles.disabled,
           style,
         )}
-        accessibilityRole="none"
         {...rest}
       />
     </View>
