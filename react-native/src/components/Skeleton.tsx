@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, ViewStyle, StyleProp } from "react-native";
+import { DimensionValue, StyleSheet, ViewStyle, StyleProp } from "react-native";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -13,7 +13,7 @@ import { mergeStyles } from "../utils";
 
 export interface SkeletonProps {
   /** Width of the skeleton */
-  width?: number | string;
+  width?: DimensionValue;
   /** Height of the skeleton */
   height?: number;
   /** Border radius (default: radii.md) */
@@ -51,7 +51,7 @@ export function Skeleton({
   const dynamicStyle: ViewStyle = {
     height,
     borderRadius: circle ? height / 2 : borderRadius,
-    ...(width !== undefined ? { width: width as number } : {}),
+    ...(width !== undefined ? { width } : {}),
   };
 
   return (
