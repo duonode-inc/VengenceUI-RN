@@ -39,6 +39,20 @@ https://github.com/user-attachments/assets/05b58add-f66e-4a4c-a04b-5dc3fba8c88b
 
 ---
 
+## 📱 React Native
+
+VengeanceUI is also available for **React Native** with the same component API, powered by `react-native-reanimated` for smooth 60 fps animations.
+
+👉 **[React Native Quick Start →](./react-native/README.md)**
+
+```tsx
+import { Button, AnimatedButton, Card, Badge, FlipText } from 'vengenceui-rn';
+
+<AnimatedButton onPress={() => {}}>Get Started</AnimatedButton>
+```
+
+---
+
 ## 🛠️ Tech Stack
 
 VengeanceUI is built using modern frontend technologies:
