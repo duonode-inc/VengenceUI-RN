@@ -22,9 +22,9 @@ https://github.com/user-attachments/assets/05b58add-f66e-4a4c-a04b-5dc3fba8c88b
 
 ---
 
-# VengeanceUI
+# VengeanceUI React Native
 
-**VengeanceUI** is a modern, animated UI component library designed to help developers build beautiful landing pages and interfaces faster. It provides ready-to-use, copy-paste friendly components with smooth animations and clean design.
+**VengeanceUI React Native** This is a port of the modern, animated UI component library designed to help developers build beautiful landing pages and interfaces faster. It provides ready-to-use, copy-paste friendly components with smooth animations and clean design.
 
 ---
 
