@@ -6,6 +6,44 @@ Modern, animated UI components for React Native, powered by [react-native-reanim
 
 ---
 
+## 📖 About This Port
+
+VengeanceUI was originally a web-first component library built with React, Tailwind CSS, and Framer Motion. This React Native port re-implements each component using native primitives so you can build the same polished UIs on iOS and Android.
+
+### What changed
+
+| Concern            | Web (original)                   | React Native (this port)                  |
+|--------------------|----------------------------------|-------------------------------------------|
+| **Styling**        | Tailwind CSS utility classes     | `StyleSheet.create()` + design tokens     |
+| **Animations**     | Framer Motion / CSS transitions  | `react-native-reanimated` (UI thread)     |
+| **Primitives**     | HTML elements (`div`, `input`)   | `View`, `Text`, `Pressable`, `TextInput`  |
+| **Headless logic** | Radix UI primitives              | React context + `Pressable`               |
+| **Class merging**  | `cn()` (clsx + tailwind-merge)   | `mergeStyles()` (StyleSheet flattening)   |
+
+### What's included
+
+18 components have been ported — every feature from the web library that doesn't require a DOM-only API:
+
+| Category        | Components                                                                 |
+|-----------------|----------------------------------------------------------------------------|
+| **Core**        | Button (6 variants, 4 sizes), AnimatedButton, Card (6 sub-components), Input, Textarea, Badge, Avatar, Label |
+| **Layout**      | Separator, Tabs (4 sub-components)                                         |
+| **Feedback**    | Alert (3 sub-components), Progress, Skeleton                               |
+| **Controls**    | Switch, Checkbox                                                           |
+| **Animated**    | AnimatedNumber, AnimatedScore, FlipText, FlipFadeText                      |
+
+### What's not ported (and why)
+
+The following web components depend on browser-only APIs and cannot be meaningfully ported to React Native:
+
+- **Radix UI dependents** — Dialog, Dropdown, Popover, Sheet, Tooltip, etc. (portal/focus-trap model is web-only)
+- **Canvas / WebGL** — LiquidMetal, LiquidOcean, PerspectiveGrid (shader-based)
+- **DOM measurement** — CreepyButton (`getBoundingClientRect`), AnimatedHero (`document.documentElement`)
+- **GSAP + ScrollTrigger** — StaggeredGrid (scroll-linked GSAP timelines)
+- **CSS-only effects** — GlowBorderCard (`conic-gradient`, `@property`), BorderBeam
+
+---
+
 ## 🚀 Quick Start
 
 ### 1. Install peer dependencies
@@ -681,6 +719,60 @@ react-native/
 ├── tsconfig.json
 └── README.md                  # This file
 ```
+
+---
+
+## 🤝 Contributing
+
+### Development setup
+
+```bash
+# 1. Clone the repo and enter the RN directory
+git clone https://github.com/duonode-inc/VengenceUI-RN.git
+cd VengenceUI-RN/react-native
+
+# 2. Install library dependencies
+npm install
+
+# 3. Verify everything compiles
+npm run typecheck
+
+# 4. Run E2E tests (optional but recommended)
+cd e2e
+npm install
+npx playwright install chromium
+npx playwright test
+```
+
+### Adding a new component
+
+1. **Create the component** in `src/components/MyComponent.tsx`
+   - Use `View`, `Text`, `Pressable`, `TextInput` (not HTML elements)
+   - Use `react-native-reanimated` for animations (not `Animated` from RN core)
+   - Import design tokens from `../theme` — don't hard-code colors or spacing
+   - Accept a `style` prop for consumer customisation
+   - Export a TypeScript interface for props (e.g. `MyComponentProps`)
+2. **Export it** from `src/index.ts` (both the component and its prop type)
+3. **Add it to the E2E harness** in `e2e/app/App.tsx` with a `testID`
+4. **Write a Playwright test** in `e2e/tests/components.spec.ts`
+5. **Document it** in this README with a usage example and prop table
+
+### Coding conventions
+
+- **TypeScript** — all components are fully typed, no `any`
+- **StyleSheet** — use `StyleSheet.create()` at module scope, not inline objects
+- **Naming** — PascalCase for components and filenames (e.g. `AnimatedButton.tsx`)
+- **Exports** — named exports only, no default exports
+- **Props** — extend RN's built-in prop types where applicable (e.g. `TextInputProps`)
+- **Theme** — use `colors`, `spacing`, `radii`, `fontSizes` from `../theme`
+
+### Submitting a PR
+
+1. Fork the repo and create a branch: `git checkout -b feat/my-component`
+2. Make your changes following the conventions above
+3. Run `npm run typecheck` in `react-native/` to verify TS compiles
+4. Run `npx playwright test` in `react-native/e2e/` to verify tests pass
+5. Open a PR against `main` with a clear description of what was added/changed
 
 ---
 
