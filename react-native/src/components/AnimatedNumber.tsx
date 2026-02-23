@@ -27,7 +27,11 @@ export function AnimatedNumber({ value, style, textStyle }: AnimatedNumberProps)
         .toString()
         .split("")
         .map((digit, index) => (
-          <SingleDigit key={index} value={digit} textStyle={textStyle} />
+          <SingleDigit
+            key={`${index}-${value.toString().length}`}
+            value={digit}
+            textStyle={textStyle}
+          />
         ))}
     </View>
   );
