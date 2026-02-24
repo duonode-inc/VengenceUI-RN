@@ -66,7 +66,7 @@ import {
   Button, AnimatedButton,
   Card, CardHeader, CardTitle, CardContent,
   Badge, FlipText,
-} from 'vengenceui-rn';
+} from 'vengeanceui-rn';
 
 <Card>
   <CardHeader>

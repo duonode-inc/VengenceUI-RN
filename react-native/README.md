@@ -95,7 +95,7 @@ yarn add react-native-reanimated
 **Option A — Install as a package** (when published to npm):
 
 ```bash
-npm install vengenceui-rn
+npm install vengeanceui-rn
 ```
 
 **Option B — Copy-paste** into your project:
@@ -109,7 +109,7 @@ cp -r react-native/src/utils ./src/vengenceui/utils
 ### 3. Import and use
 
 ```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from 'vengenceui-rn';
+import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from 'vengeanceui-rn';
 // or, if copy-pasted:
 import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from './vengenceui';
 
@@ -172,7 +172,7 @@ import {
   radii,
   fontSizes,
   mergeStyles,
-} from 'vengenceui-rn';
+} from 'vengeanceui-rn';
 
 // TypeScript types
 import type {
@@ -196,7 +196,7 @@ import type {
   FlipTextProps,
   FlipFadeTextProps,
   ThemeColors,
-} from 'vengenceui-rn';
+} from 'vengeanceui-rn';
 ```
 
 ---
@@ -576,7 +576,7 @@ Word cycling animation — rotates through an array of words with staggered 3D f
 VengeanceUI ships with a default light theme and a matching dark theme. Import and customise them:
 
 ```tsx
-import { colors, darkColors, spacing, radii, fontSizes } from 'vengenceui-rn';
+import { colors, darkColors, spacing, radii, fontSizes } from 'vengeanceui-rn';
 
 <View style={{ backgroundColor: colors.background, padding: spacing.md }}>
   <Text style={{ color: colors.foreground, fontSize: fontSizes.base }}>
