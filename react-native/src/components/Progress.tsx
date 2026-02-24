@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   track: {
     height: 8,
     width: "100%",
-    backgroundColor: colors.primary + "33", // 20% opacity
+    backgroundColor: colors.primaryTrack,
     borderRadius: radii.full,
     overflow: "hidden",
   },

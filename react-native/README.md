@@ -1,46 +1,69 @@
-# VengeanceUI — React Native
+<p align="center">
+  <h1 align="center">VengeanceUI — React Native</h1>
+  <p align="center"><strong>The official React Native port of VengeanceUI</strong></p>
+  <p align="center">
+    Modern, animated UI components for iOS &amp; Android — powered by <code>react-native-reanimated</code>
+  </p>
+</p>
 
-Modern, animated UI components for React Native, powered by [react-native-reanimated](https://docs.swmansion.com/react-native-reanimated/).
-
-> This is the React Native port of [VengeanceUI](../README.md). It provides the same beautiful, animation-first design language re-built with React Native primitives and 60 fps Reanimated animations.
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License" />
+  <img src="https://img.shields.io/badge/TypeScript-strict-blue?logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/React_Native-%3E%3D0.70-61DAFB?logo=react&logoColor=white" alt="React Native" />
+  <img src="https://img.shields.io/badge/Reanimated-%3E%3D3.0-6C63FF?logo=data:image/svg+xml;base64,&logoColor=white" alt="Reanimated 3" />
+  <img src="https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey" alt="Platform" />
+  <img src="https://img.shields.io/badge/components-18-green" alt="18 Components" />
+</p>
 
 ---
 
 ## 📖 About This Port
 
-VengeanceUI was originally a web-first component library built with React, Tailwind CSS, and Framer Motion. This React Native port re-implements each component using native primitives so you can build the same polished UIs on iOS and Android.
+VengeanceUI started as a **web-first** component library built with React, Tailwind CSS, and Framer Motion. This package is the **official React Native port** — the same design language and API style, re-built from scratch with native primitives so you get identical-looking UIs on iOS and Android with smooth 60 fps animations.
 
-### What changed
+### Architectural decisions
 
-| Concern            | Web (original)                   | React Native (this port)                  |
-|--------------------|----------------------------------|-------------------------------------------|
-| **Styling**        | Tailwind CSS utility classes     | `StyleSheet.create()` + design tokens     |
-| **Animations**     | Framer Motion / CSS transitions  | `react-native-reanimated` (UI thread)     |
-| **Primitives**     | HTML elements (`div`, `input`)   | `View`, `Text`, `Pressable`, `TextInput`  |
-| **Headless logic** | Radix UI primitives              | React context + `Pressable`               |
-| **Class merging**  | `cn()` (clsx + tailwind-merge)   | `mergeStyles()` (StyleSheet flattening)   |
+| Concern            | Web (original)                   | React Native (this port)                  | Why                                                            |
+|--------------------|----------------------------------|-------------------------------------------|----------------------------------------------------------------|
+| **Styling**        | Tailwind CSS utility classes     | `StyleSheet.create()` + design tokens     | RN has no CSS; StyleSheet is the native equivalent             |
+| **Animations**     | Framer Motion / CSS transitions  | `react-native-reanimated` (UI thread)     | Only Reanimated runs animations on the native UI thread at 60 fps |
+| **Primitives**     | HTML (`div`, `input`, `span`)    | `View`, `Text`, `Pressable`, `TextInput`  | RN does not render HTML; these are the native equivalents      |
+| **Headless logic** | Radix UI primitives              | React context + `Pressable`               | Radix is web-only; we replicate the same composable API by hand |
+| **Class merging**  | `cn()` (clsx + tailwind-merge)   | `mergeStyles()` (StyleSheet flattening)   | No class strings in RN; we merge style objects instead          |
 
-### What's included
+---
 
-18 components have been ported — every feature from the web library that doesn't require a DOM-only API:
+## ✅ What's included
 
-| Category        | Components                                                                 |
-|-----------------|----------------------------------------------------------------------------|
-| **Core**        | Button (6 variants, 4 sizes), AnimatedButton, Card (6 sub-components), Input, Textarea, Badge, Avatar, Label |
-| **Layout**      | Separator, Tabs (4 sub-components)                                         |
-| **Feedback**    | Alert (3 sub-components), Progress, Skeleton                               |
-| **Controls**    | Switch, Checkbox                                                           |
-| **Animated**    | AnimatedNumber, AnimatedScore, FlipText, FlipFadeText                      |
+18 components have been ported — every feature from the web library that does **not** require a DOM-only API:
 
-### What's not ported (and why)
+| Category        | Components                                                                                            | Count |
+|-----------------|-------------------------------------------------------------------------------------------------------|-------|
+| **Core**        | Button (6 variants, 4 sizes), AnimatedButton, Card (+ Header, Title, Description, Content, Footer), Input, Textarea, Badge, Avatar, Label | 8     |
+| **Layout**      | Separator, Tabs (+ TabsList, TabsTrigger, TabsContent)                                                | 2     |
+| **Feedback**    | Alert (+ AlertTitle, AlertDescription), Progress, Skeleton                                            | 3     |
+| **Controls**    | Switch, Checkbox                                                                                      | 2     |
+| **Animated**    | AnimatedNumber, AnimatedScore, FlipText, FlipFadeText                                                 | 4     |
 
-The following web components depend on browser-only APIs and cannot be meaningfully ported to React Native:
+> **Total: 18 components, 30+ named exports** including sub-components and TypeScript types.
 
-- **Radix UI dependents** — Dialog, Dropdown, Popover, Sheet, Tooltip, etc. (portal/focus-trap model is web-only)
-- **Canvas / WebGL** — LiquidMetal, LiquidOcean, PerspectiveGrid (shader-based)
-- **DOM measurement** — CreepyButton (`getBoundingClientRect`), AnimatedHero (`document.documentElement`)
-- **GSAP + ScrollTrigger** — StaggeredGrid (scroll-linked GSAP timelines)
-- **CSS-only effects** — GlowBorderCard (`conic-gradient`, `@property`), BorderBeam
+---
+
+## ❌ What's NOT ported (and why)
+
+The web library has ~84 components. The following categories are **intentionally excluded** because they depend on browser-only APIs that have no React Native equivalent:
+
+| Web component(s)                            | Blocking dependency                                  |
+|---------------------------------------------|------------------------------------------------------|
+| Dialog, Dropdown, Popover, Sheet, Tooltip, Command, ContextMenu, HoverCard, Select, Menubar, NavigationMenu | **Radix UI** — portal / focus-trap model is web-only |
+| LiquidMetal, LiquidOcean, PerspectiveGrid, LiquidGradient, LiquidText | **Canvas / WebGL** — shader-based rendering          |
+| CreepyButton, AnimatedHero                  | **DOM measurement** — `getBoundingClientRect`, `document.documentElement` |
+| StaggeredGrid                               | **GSAP + ScrollTrigger** — scroll-linked GSAP timelines |
+| GlowBorderCard, BorderBeam                  | **CSS-only effects** — `conic-gradient`, `@property` |
+| Calendar, Carousel, Chart, Form, Table      | **Complex DOM** — deep DOM tree / third-party web libs |
+| Breadcrumb, Pagination, ScrollArea, Slider  | **Web layout** — assumes browser scroll/layout model |
+
+> If you need any of these in React Native, consider using a purpose-built RN library (e.g. `@gorhom/bottom-sheet` for sheets, `react-native-svg` for charts).
 
 ---
 
@@ -56,7 +79,7 @@ npm install react-native-reanimated
 yarn add react-native-reanimated
 ```
 
-> **Note:** `react-native-reanimated` requires a Babel plugin. Add it to your `babel.config.js`:
+> **Babel plugin required.** Add to your `babel.config.js`:
 >
 > ```js
 > module.exports = {
@@ -65,11 +88,11 @@ yarn add react-native-reanimated
 > };
 > ```
 >
-> For Expo projects, the plugin is included automatically when using `expo-dev-client`.
+> For **Expo** projects with `expo-dev-client`, the plugin is included automatically.
 
 ### 2. Install or copy the library
 
-**Option A — Install as a package** (when published):
+**Option A — Install as a package** (when published to npm):
 
 ```bash
 npm install vengenceui-rn
@@ -86,18 +109,30 @@ cp -r react-native/src/utils ./src/vengenceui/utils
 ### 3. Import and use
 
 ```tsx
-// When installed as a package:
-import { Button, Card, CardHeader, CardTitle } from 'vengenceui-rn';
+import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from 'vengenceui-rn';
+// or, if copy-pasted:
+import { Button, Card, CardHeader, CardTitle, CardContent, Badge } from './vengenceui';
 
-// When copy-pasted:
-import { Button, Card, CardHeader, CardTitle } from './vengenceui';
+export default function App() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Welcome</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Badge variant="secondary">New</Badge>
+        <Button variant="default" onPress={() => console.log('pressed')}>
+          Get Started
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
 ```
 
 ---
 
 ## 📦 Full Import Reference
-
-Every component and type is exported from the library entry point:
 
 ```tsx
 import {
@@ -137,7 +172,7 @@ import {
   radii,
   fontSizes,
   mergeStyles,
-} from 'vengenceui-rn'; // or './vengenceui'
+} from 'vengenceui-rn';
 
 // TypeScript types
 import type {
@@ -166,34 +201,18 @@ import type {
 
 ---
 
-## 📦 Components
+## 🧩 Components
 
 ### Button
 
 A flexible button with variant and size presets.
 
 ```tsx
-import { Button } from 'vengenceui-rn';
-
-<Button variant="default" size="default" onPress={() => {}}>
-  Click Me
-</Button>
-
-<Button variant="destructive" size="lg" onPress={() => {}}>
-  Delete
-</Button>
-
-<Button variant="outline" size="sm" onPress={() => {}}>
-  Cancel
-</Button>
-
-<Button variant="ghost" onPress={() => {}}>
-  Ghost
-</Button>
-
-<Button variant="link" onPress={() => {}}>
-  Learn More
-</Button>
+<Button variant="default" size="default" onPress={() => {}}>Click Me</Button>
+<Button variant="destructive" size="lg" onPress={() => {}}>Delete</Button>
+<Button variant="outline" size="sm" onPress={() => {}}>Cancel</Button>
+<Button variant="ghost" onPress={() => {}}>Ghost</Button>
+<Button variant="link" onPress={() => {}}>Learn More</Button>
 ```
 
 | Prop       | Type                                                                  | Default     |
@@ -211,11 +230,9 @@ Plus all `PressableProps` from React Native.
 
 ### AnimatedButton
 
-A spring-animated button with a shimmer effect, powered by `react-native-reanimated`.
+Spring-animated button with shimmer overlay, powered by `react-native-reanimated`.
 
 ```tsx
-import { AnimatedButton } from 'vengenceui-rn';
-
 <AnimatedButton onPress={() => console.log('pressed!')}>
   Browse Components
 </AnimatedButton>
@@ -233,38 +250,30 @@ import { AnimatedButton } from 'vengenceui-rn';
 
 ### Card
 
-A card system with composable sub-components.
+Composable card system with six sub-components.
 
 ```tsx
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from 'vengenceui-rn';
-
 <Card>
   <CardHeader>
-    <CardTitle>Card Title</CardTitle>
-    <CardDescription>Card description text</CardDescription>
+    <CardTitle>Title</CardTitle>
+    <CardDescription>Description text</CardDescription>
   </CardHeader>
-  <CardContent>
-    {/* Your content here */}
-  </CardContent>
-  <CardFooter>
-    <Button onPress={() => {}}>Action</Button>
-  </CardFooter>
+  <CardContent>{/* content */}</CardContent>
+  <CardFooter><Button onPress={() => {}}>Action</Button></CardFooter>
 </Card>
 ```
 
-All sub-components accept `style` prop for customization.
+All sub-components accept a `style` prop for customisation.
 
 ---
 
 ### Input
 
-A styled `TextInput` wrapper with focus & validation states.
+Styled `TextInput` wrapper with focus and validation states.
 
 ```tsx
-import { Input } from 'vengenceui-rn';
-
-<Input placeholder="Email address" keyboardType="email-address" />
-<Input placeholder="Required field" invalid />
+<Input placeholder="Email" keyboardType="email-address" />
+<Input placeholder="Required" invalid />
 <Input placeholder="Read only" editable={false} />
 ```
 
@@ -280,23 +289,14 @@ Plus all `TextInputProps` from React Native.
 
 ### Textarea
 
-A multiline text input with the same styling as Input.
+Multiline text input with the same styling as Input.
 
 ```tsx
-import { Textarea } from 'vengenceui-rn';
-
 <Textarea placeholder="Enter description…" />
 <Textarea placeholder="Invalid" invalid />
-<Textarea placeholder="Read only" editable={false} />
 ```
 
-| Prop             | Type                    | Default |
-|------------------|-------------------------|---------|
-| `invalid`        | `boolean`               | `false` |
-| `containerStyle` | `StyleProp<ViewStyle>`  | —       |
-| `style`          | `StyleProp<TextStyle>`  | —       |
-
-Plus all `TextInputProps` from React Native.
+Same props as Input with `multiline` enabled by default.
 
 ---
 
@@ -305,8 +305,6 @@ Plus all `TextInputProps` from React Native.
 Small status indicator with variant support.
 
 ```tsx
-import { Badge } from 'vengenceui-rn';
-
 <Badge>Default</Badge>
 <Badge variant="secondary">Secondary</Badge>
 <Badge variant="destructive">Error</Badge>
@@ -327,8 +325,6 @@ import { Badge } from 'vengenceui-rn';
 Circular avatar with image source and text fallback.
 
 ```tsx
-import { Avatar } from 'vengenceui-rn';
-
 <Avatar source={{ uri: 'https://example.com/avatar.jpg' }} size={48} />
 <Avatar fallback="AB" size={48} />
 ```
@@ -336,7 +332,7 @@ import { Avatar } from 'vengenceui-rn';
 | Prop       | Type                    | Default |
 |------------|-------------------------|---------|
 | `source`   | `ImageSourcePropType`   | —       |
-| `fallback` | `string`                | `'?'`  |
+| `fallback` | `string`                | `'?'`   |
 | `size`     | `number`                | `32`    |
 | `style`    | `StyleProp<ViewStyle>`  | —       |
 | `textStyle`| `StyleProp<TextStyle>`  | —       |
@@ -348,8 +344,6 @@ import { Avatar } from 'vengenceui-rn';
 Form label text component.
 
 ```tsx
-import { Label } from 'vengenceui-rn';
-
 <Label>Email address</Label>
 <Label disabled>Disabled field</Label>
 ```
@@ -366,8 +360,6 @@ import { Label } from 'vengenceui-rn';
 Visual divider for content sections.
 
 ```tsx
-import { Separator } from 'vengenceui-rn';
-
 <Separator />                         {/* horizontal */}
 <Separator orientation="vertical" />  {/* vertical */}
 ```
@@ -384,16 +376,13 @@ import { Separator } from 'vengenceui-rn';
 Animated loading placeholder with pulse effect.
 
 ```tsx
-import { Skeleton } from 'vengenceui-rn';
-
 <Skeleton height={20} />
 <Skeleton height={40} width={40} circle />
-<Skeleton height={12} width={200} />
 ```
 
 | Prop           | Type                   | Default    |
 |----------------|------------------------|------------|
-| `width`        | `number \| string`     | `'100%'`   |
+| `width`        | `DimensionValue`       | `'100%'`   |
 | `height`       | `number`               | `20`       |
 | `borderRadius` | `number`               | `radii.md` |
 | `circle`       | `boolean`              | `false`    |
@@ -406,8 +395,6 @@ import { Skeleton } from 'vengenceui-rn';
 Animated progress bar with smooth transitions.
 
 ```tsx
-import { Progress } from 'vengenceui-rn';
-
 <Progress value={65} />
 <Progress value={100} />
 ```
@@ -425,12 +412,8 @@ import { Progress } from 'vengenceui-rn';
 Animated toggle switch.
 
 ```tsx
-import { Switch } from 'vengenceui-rn';
-
 const [on, setOn] = useState(false);
-
 <Switch value={on} onValueChange={setOn} />
-<Switch value={on} onValueChange={setOn} disabled />
 ```
 
 | Prop            | Type                       | Default |
@@ -447,12 +430,8 @@ const [on, setOn] = useState(false);
 Animated checkbox with press feedback.
 
 ```tsx
-import { Checkbox } from 'vengenceui-rn';
-
 const [checked, setChecked] = useState(false);
-
 <Checkbox checked={checked} onCheckedChange={setChecked} />
-<Checkbox checked={checked} onCheckedChange={setChecked} disabled />
 ```
 
 | Prop              | Type                         | Default |
@@ -469,8 +448,6 @@ const [checked, setChecked] = useState(false);
 Alert container with title and description sub-components.
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from 'vengenceui-rn';
-
 <Alert>
   <AlertTitle>Heads up!</AlertTitle>
   <AlertDescription>This is an informational alert.</AlertDescription>
@@ -494,8 +471,6 @@ import { Alert, AlertTitle, AlertDescription } from 'vengenceui-rn';
 Tab navigation with animated active state.
 
 ```tsx
-import { Tabs, TabsList, TabsTrigger, TabsContent } from 'vengenceui-rn';
-
 const [tab, setTab] = useState('account');
 
 <Tabs value={tab} onValueChange={setTab}>
@@ -503,12 +478,8 @@ const [tab, setTab] = useState('account');
     <TabsTrigger value="account">Account</TabsTrigger>
     <TabsTrigger value="settings">Settings</TabsTrigger>
   </TabsList>
-  <TabsContent value="account">
-    <Text>Account settings here</Text>
-  </TabsContent>
-  <TabsContent value="settings">
-    <Text>App settings here</Text>
-  </TabsContent>
+  <TabsContent value="account"><Text>Account settings</Text></TabsContent>
+  <TabsContent value="settings"><Text>App settings</Text></TabsContent>
 </Tabs>
 ```
 
@@ -526,10 +497,7 @@ const [tab, setTab] = useState('account');
 Digits slide-animate when the value changes.
 
 ```tsx
-import { AnimatedNumber } from 'vengenceui-rn';
-
 const [count, setCount] = useState(42);
-
 <AnimatedNumber value={count} />
 ```
 
@@ -546,10 +514,7 @@ const [count, setCount] = useState(42);
 Score display with directional color feedback (green ↑ / red ↓).
 
 ```tsx
-import { AnimatedScore } from 'vengenceui-rn';
-
 const [score, setScore] = useState(100);
-
 <AnimatedScore value={score} duration={400} />
 ```
 
@@ -564,14 +529,10 @@ const [score, setScore] = useState(100);
 
 ### FlipText
 
-Characters flip with a 3D rotation animation powered by Reanimated.
+Characters flip with a 3D rotation animation.
 
 ```tsx
-import { FlipText } from 'vengenceui-rn';
-
-<FlipText duration={2200} loop>
-  Hello World
-</FlipText>
+<FlipText duration={2200} loop>Hello World</FlipText>
 ```
 
 | Prop        | Type                   | Default  |
@@ -592,8 +553,6 @@ import { FlipText } from 'vengenceui-rn';
 Word cycling animation — rotates through an array of words with staggered 3D flip-fade transitions.
 
 ```tsx
-import { FlipFadeText } from 'vengenceui-rn';
-
 <FlipFadeText
   words={["LOADING", "COMPUTING", "SEARCHING"]}
   interval={2500}
@@ -614,54 +573,51 @@ import { FlipFadeText } from 'vengenceui-rn';
 
 ## 🎨 Theming
 
-VengeanceUI ships with a default light theme and a matching dark theme. Import and customize them:
+VengeanceUI ships with a default light theme and a matching dark theme. Import and customise them:
 
 ```tsx
 import { colors, darkColors, spacing, radii, fontSizes } from 'vengenceui-rn';
 
-// Use directly
 <View style={{ backgroundColor: colors.background, padding: spacing.md }}>
   <Text style={{ color: colors.foreground, fontSize: fontSizes.base }}>
     Themed content
   </Text>
 </View>
-
-// Available tokens:
-// colors — primary, primaryForeground, secondary, secondaryForeground,
-//          destructive, destructiveForeground, background, foreground,
-//          card, cardForeground, muted, mutedForeground, accent,
-//          accentForeground, border, input, ring
-// darkColors — same keys as colors, dark mode values
-// spacing — xs(4), sm(8), md(16), lg(24), xl(32)
-// radii — sm(4), md(8), lg(12), xl(16), full(9999)
-// fontSizes — xs(12), sm(14), base(16), lg(18), xl(20), 2xl(24), 3xl(30)
 ```
 
-Override the theme by editing `theme/index.ts` or providing your own color tokens.
+### Available tokens
+
+| Token        | Keys                                                                                          |
+|--------------|-----------------------------------------------------------------------------------------------|
+| `colors`     | `primary`, `primaryForeground`, `secondary`, `secondaryForeground`, `destructive`, `destructiveForeground`, `background`, `foreground`, `card`, `cardForeground`, `muted`, `mutedForeground`, `accent`, `accentForeground`, `border`, `input`, `ring`, `primaryTrack` |
+| `darkColors` | Same keys as `colors`, dark-mode values                                                       |
+| `spacing`    | `xs` (4), `sm` (8), `md` (16), `lg` (24), `xl` (32)                                          |
+| `radii`      | `sm` (4), `md` (8), `lg` (12), `xl` (16), `full` (9999)                                      |
+| `fontSizes`  | `xs` (12), `sm` (14), `base` (16), `lg` (18), `xl` (20), `2xl` (24), `3xl` (30)              |
+
+Override the theme by editing `theme/index.ts` or providing your own colour tokens.
 
 ---
 
 ## 🛠️ Using as a Library
 
-The `react-native/` directory is structured as a standalone npm package. The `package.json` defines:
+The `react-native/` directory is a standalone npm package. The `package.json` defines:
 
-- **`main`** and **`types`** pointing to `src/index.ts`
-- **`peerDependencies`**: `react ≥18`, `react-native ≥0.70`, `react-native-reanimated ≥3`
-- All components and types are exported from the single entry point
+- **`main`** and **`types`** → `src/index.ts`
+- **`files`** → `["src/"]` (E2E tests are excluded from publish)
+- **`peerDependencies`** → `react ≥18`, `react-native ≥0.70`, `react-native-reanimated ≥3`
 
-This means you can:
+You can:
 
-1. **Publish to npm** — run `npm publish` from the `react-native/` directory
-2. **Link locally** — use `npm link` or file-based dependencies
+1. **Publish to npm** — `cd react-native && npm publish`
+2. **Link locally** — `npm link` or file-based dependencies
 3. **Copy-paste** — copy the `src/` folder into your project
-
-None of the E2E test infrastructure (`e2e/` directory) is included in the published package.
 
 ---
 
 ## 🧪 E2E Testing
 
-The library includes Playwright E2E tests that verify all components render and function correctly:
+29 Playwright tests verify all components render and function correctly:
 
 ```bash
 cd react-native/e2e
@@ -670,18 +626,19 @@ npx playwright install chromium
 npx playwright test
 ```
 
-Tests run via Vite + `react-native-web`, rendering components in a browser. CI runs automatically via GitHub Actions on every push/PR.
+Tests run via Vite + `react-native-web`, rendering RN components in a browser. CI runs automatically on every push/PR via GitHub Actions.
 
 ---
 
 ## 🛠️ Tech Stack
 
-| Technology                | Purpose                       |
-|---------------------------|-------------------------------|
-| React Native              | Cross-platform UI primitives  |
-| TypeScript                | Type safety                   |
-| react-native-reanimated   | 60 fps animations on the UI thread |
-| StyleSheet                | Native-optimised styling      |
+| Technology              | Purpose                              |
+|-------------------------|--------------------------------------|
+| React Native            | Cross-platform UI primitives         |
+| TypeScript (strict)     | Type safety                          |
+| react-native-reanimated | 60 fps animations on the UI thread   |
+| StyleSheet              | Native-optimised styling             |
+| Playwright              | E2E testing via react-native-web     |
 
 ---
 
@@ -731,13 +688,13 @@ react-native/
 git clone https://github.com/duonode-inc/VengenceUI-RN.git
 cd VengenceUI-RN/react-native
 
-# 2. Install library dependencies
+# 2. Install dependencies
 npm install
 
-# 3. Verify everything compiles
+# 3. Verify TypeScript compiles
 npm run typecheck
 
-# 4. Run E2E tests (optional but recommended)
+# 4. Run E2E tests
 cd e2e
 npm install
 npx playwright install chromium
@@ -746,20 +703,20 @@ npx playwright test
 
 ### Adding a new component
 
-1. **Create the component** in `src/components/MyComponent.tsx`
-   - Use `View`, `Text`, `Pressable`, `TextInput` (not HTML elements)
-   - Use `react-native-reanimated` for animations (not `Animated` from RN core)
-   - Import design tokens from `../theme` — don't hard-code colors or spacing
+1. **Create** `src/components/MyComponent.tsx`
+   - Use RN primitives (`View`, `Text`, `Pressable`) — not HTML elements
+   - Use `react-native-reanimated` for animations — not `Animated` from RN core
+   - Import design tokens from `../theme` — don't hard-code colours or spacing
    - Accept a `style` prop for consumer customisation
    - Export a TypeScript interface for props (e.g. `MyComponentProps`)
-2. **Export it** from `src/index.ts` (both the component and its prop type)
-3. **Add it to the E2E harness** in `e2e/app/App.tsx` with a `testID`
+2. **Export** from `src/index.ts` (both the component and its prop type)
+3. **Add to E2E harness** in `e2e/app/App.tsx` with a `testID`
 4. **Write a Playwright test** in `e2e/tests/components.spec.ts`
-5. **Document it** in this README with a usage example and prop table
+5. **Document** in this README with a usage example and prop table
 
 ### Coding conventions
 
-- **TypeScript** — all components are fully typed, no `any`
+- **TypeScript** — all components fully typed, no `any`
 - **StyleSheet** — use `StyleSheet.create()` at module scope, not inline objects
 - **Naming** — PascalCase for components and filenames (e.g. `AnimatedButton.tsx`)
 - **Exports** — named exports only, no default exports
@@ -770,12 +727,12 @@ npx playwright test
 
 1. Fork the repo and create a branch: `git checkout -b feat/my-component`
 2. Make your changes following the conventions above
-3. Run `npm run typecheck` in `react-native/` to verify TS compiles
-4. Run `npx playwright test` in `react-native/e2e/` to verify tests pass
-5. Open a PR against `main` with a clear description of what was added/changed
+3. Run `npm run typecheck` in `react-native/` — must pass
+4. Run `npx playwright test` in `react-native/e2e/` — must pass
+5. Open a PR against `main` with a clear description
 
 ---
 
 ## 📄 License
 
-MIT
+MIT — see [LICENSE](../LICENSE) for details.

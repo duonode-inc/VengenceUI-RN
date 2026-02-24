@@ -34,6 +34,9 @@ export const colors = {
   border: "#e5e5e5",
   input: "#e5e5e5",
   ring: "#0a0a0a",
+
+  /** Derived */
+  primaryTrack: "rgba(23, 23, 23, 0.2)",
 };
 
 export const darkColors: typeof colors = {
@@ -61,6 +64,8 @@ export const darkColors: typeof colors = {
   border: "#262626",
   input: "#262626",
   ring: "#d4d4d4",
+
+  primaryTrack: "rgba(250, 250, 250, 0.2)",
 };
 
 export const spacing = {

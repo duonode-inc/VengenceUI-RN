@@ -107,7 +107,7 @@ export function AnimatedScore({
         .split("")
         .map((digit, index) => (
           <ScoreDigit
-            key={index}
+            key={`${index}-${value.toString().length}`}
             digit={digit}
             direction={direction}
             duration={duration}

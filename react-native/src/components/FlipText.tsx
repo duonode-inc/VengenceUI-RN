@@ -63,7 +63,7 @@ export function FlipText({
   return (
     <View style={mergeStyles(flipStyles.wrapper, style)}>
       {words.map((word, wordIndex) => (
-        <View key={wordIndex} style={flipStyles.word}>
+        <View key={`${wordIndex}-${word}`} style={flipStyles.word}>
           {word.split("").map((char, charIndex) => {
             const globalIndex = getCharIndex(wordIndex, charIndex);
             let charDelay = delay;
@@ -74,7 +74,7 @@ export function FlipText({
             }
             return (
               <FlipChar
-                key={charIndex}
+                key={`${wordIndex}-${charIndex}-${char}`}
                 char={char}
                 duration={duration}
                 delay={charDelay}
