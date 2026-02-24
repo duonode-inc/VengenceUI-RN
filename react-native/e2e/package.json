@@ -1,5 +1,5 @@
 {
-  "name": "vengenceui-rn-e2e",
+  "name": "vengeanceui-rn-e2e",
   "private": true,
   "scripts": {
     "dev": "vite --config app/vite.config.ts",
