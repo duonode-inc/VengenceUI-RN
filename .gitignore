@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/react-native/node_modules
+/react-native/e2e/node_modules
 /.pnp
 .pnp.*
 .yarn/*
@@ -12,6 +14,9 @@
 
 # testing
 /coverage
+/react-native/e2e/dist-e2e
+/react-native/e2e/test-results
+/react-native/e2e/playwright-report
 
 # next.js
 /.next/
